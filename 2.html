@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Model & View</title>
+
+    <script src="jquery-1.11.2.js"></script>
+
+    <script type="application/javascript">
+
+        var calculator;
+
+        function Calculator() {
+            this.x = 0;
+            this.y = 0;
+            this.sum = 0;
+        }
+
+        Calculator.prototype.calculate = function() {
+            this.sum = this.x + this.y;
+            return this.sum;
+        };
+
+        $(function() {
+
+            calculator = new Calculator();
+            $('#idCalculate').click(function() {
+                calculator.x = parseInt($('#idx').val());
+                calculator.y = parseInt($('#idy').val());
+                calculator.calculate()
+                $('#idSum').html(calculator.sum);
+            });
+        })
+    </script>
+
+</head>
+<body>
+
+
+<div id="idForm">
+    <input type="text" id="idx" >
+    <input type="text" id="idy" >
+    <input type="submit" value="Calculate" id="idCalculate">
+</div>
+<div id="idSum"></div>
+
+</body>
+</html>

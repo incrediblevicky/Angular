@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Model & View</title>
+
+    <script src="jquery-1.11.2.js"></script>
+
+    <script type="application/javascript">
+
+        var calculator;
+
+        function Calculator() {
+            var _data = {
+                x : 0,
+                y : 0,
+                sum : 0
+            };
+
+            this.get = function(attr) {
+                return _data[attr];
+            };
+
+            this.set = function(attr, value) {
+                _data[attr] = value;
+            };
+        }
+
+        Calculator.prototype.calculate = function() {
+            var sum = this.get('x') + this.get('y');
+            this.set('sum', sum);
+        };
+
+        $(function() {
+            calculator = new Calculator();
+            $('#idCalculate').click(function() {
+                calculator.set('x', parseInt($('#idx').val()));
+                calculator.set('y', parseInt($('#idy').val()));
+                calculator.calculate()
+                $('#idSum').html(calculator.get('sum'));
+            });
+        })
+    </script>
+
+</head>
+<body>
+
+
+<div id="idForm">
+    <input type="text" id="idx" >
+    <input type="text" id="idy" >
+    <input type="submit" value="Calculate" id="idCalculate">
+</div>
+<div id="idSum"></div>
+
+</body>
+</html>

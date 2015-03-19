@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Model & View</title>
+
+    <script src="jquery-1.11.2.js"></script>
+
+    <script type="application/javascript">
+        $(function() {
+            $('#idCalculate').click(function() {
+                var x = parseInt($('#idx').val());
+                var y = parseInt($('#idy').val());
+
+                console.log(x + ' ' + y);
+                $('#idSum').html(x + y);
+            });
+        })
+    </script>
+
+</head>
+<body>
+
+
+<div id="idForm">
+    <input type="text" id="idx" >
+    <input type="text" id="idy" >
+    <input type="submit" value="Calculate" id="idCalculate">
+</div>
+<div id="idSum"></div>
+
+</body>
+</html>

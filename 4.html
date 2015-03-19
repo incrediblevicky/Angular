@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Model & View</title>
+
+    <script src="jquery-1.11.2.js"></script>
+
+    <script type="application/javascript">
+
+        var calculator;
+
+        function Calculator() {
+            var _data = {
+                x : 0,
+                y : 0,
+                sum : 0
+            };
+
+            this.get = function(attr) {
+                return _data[attr];
+            };
+
+            this.set = function(attr, value) {
+                _data[attr] = value;
+                trigger(attr);
+            };
+
+            var _subscribers = {};
+
+            this.addSubscriber = function(attr, subscriptionFn) {
+                _subscribers[attr] = _subscribers[attr] || [];
+                _subscribers[attr].push(subscriptionFn);
+            };
+
+            function trigger(attr) {
+                var _subscriberFunc = _subscribers[attr] || [];
+                for(var i = 0; i < _subscriberFunc.length; i++) {
+                    var func = _subscriberFunc[i];
+                    func();
+                }
+            }
+        }
+
+        Calculator.prototype.calculate = function() {
+            var sum = this.get('x') + this.get('y');
+            this.set('sum', sum);
+        };
+
+        function init(calculator) {
+            calculator.addSubscriber('x', function() {
+                $('#idx').val(calculator.get('x'));
+            });
+            calculator.addSubscriber('y', function() {
+                $('#idy').val(calculator.get('y'));
+            });
+            calculator.addSubscriber('sum', function() {
+                $('#idSum').html(calculator.get('sum'));
+            });
+
+            $('#idCalculate').click(function() {
+                calculator.calculate();
+            });
+
+
+            //UI iteraction
+            $('#idx').change(function(){
+                calculator.set('x', parseInt($('#idx').val()));
+            });
+
+            $('#idy').change(function(){
+                calculator.set('y', parseInt($('#idy').val()));
+            });
+        }
+
+        $(function() {
+            calculator = new Calculator();
+
+            init(calculator);
+
+        });
+
+
+        // on console
+//        calculator.set('x', 5);
+//        calculator.set('y', 3);
+//        calculator.calculate()
+    </script>
+
+</head>
+<body>
+
+
+<div id="idForm">
+    <input type="text" id="idx" >
+    <input type="text" id="idy" >
+    <input type="submit" value="Calculate" id="idCalculate">
+</div>
+<div id="idSum"></div>
+
+</body>
+</html>

@@ -1,1 +1,2 @@
-# Study Angular
+# Model view concerns & requireJS
+
